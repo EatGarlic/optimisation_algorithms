@@ -9,6 +9,9 @@ GENERATIONS = 200
 MUTATION_PROB = 0.05
 
 
+##############################################################
+
+
 def mutate(child):
     # flip a random staff assignment for a random project row
     new_child = cloneVector(child)
@@ -21,10 +24,16 @@ def mutate(child):
     return new_child
 
 
+##############################################################
+
+
 def crossover(parent_a, parent_b):
     cross_point = random.randint(1, len(parent_a) - 1)
 
     return cloneVector(parent_a[:cross_point]) + cloneVector(parent_b[cross_point:])
+
+
+##############################################################
 
 
 def tournament_selection(population, size=5):
@@ -37,6 +46,9 @@ def tournament_selection(population, size=5):
     random.shuffle(parents)
 
     return parents
+
+
+##############################################################
 
 
 def genetic_algorithm(quickFinish=True, quiet=False):
@@ -85,8 +97,7 @@ def genetic_algorithm(quickFinish=True, quiet=False):
         gen += 1
 
             
-
-
+    # plot graph
     plt.figure(figsize=(9, 5), dpi=400)
     plt.plot(avg_costs, label="avg fitness")
     plt.plot(best_costs, label="best fitness")
@@ -99,6 +110,8 @@ def genetic_algorithm(quickFinish=True, quiet=False):
 
     return min(population, key=lambda x: fitness(x))
 
+
+##############################################################
 
 
 if __name__ == "__main__":

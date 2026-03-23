@@ -2,6 +2,8 @@ import random
 from context import *
 
 
+##############################################################
+
 _a = 0.20
 _b = 0.20
 _d = 0.20
@@ -61,6 +63,7 @@ def vectorCost(vector: list[list[int]], cache=True) -> float:
     return out
 
 
+##############################################################
 
 
 def printVector(vector: list[list[int]], cost=True) -> None:
@@ -75,6 +78,9 @@ def printVector(vector: list[list[int]], cost=True) -> None:
 
     if cost:
         print(f'  Cost: {vectorCost(vector)}')
+
+
+##############################################################
 
 
 def randomVector(smart=False) -> list[list[int]]:
@@ -94,8 +100,14 @@ def randomVector(smart=False) -> list[list[int]]:
     return out
 
 
+##############################################################
+
+
 def cloneVector(vector: list[list[int]]) -> list[list[int]]:
     return [row[:] for row in vector]
+
+
+##############################################################
 
 
 if __name__ == "__main__":
