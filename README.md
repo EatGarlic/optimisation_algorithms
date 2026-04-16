@@ -21,11 +21,11 @@ eg: "python main.py -g"
 ```
 
 ## Contribution
-Just submit a pull request. I'll add you as a collaborator once I know your account.
+Just submit a pull request. I'll add you as a collaborator once I know your account. *also try not to change other peoples algorithms*
+
 
 > [!IMPORTANT]
 > Make sure all algorithms run correctly before pushing any changes
-
 
 ## Repository contents
 * `main.py` - main script to run all programs
