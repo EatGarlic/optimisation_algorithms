@@ -2,11 +2,25 @@ import random, matplotlib.pyplot as plt
 from chromosome import Chromosome, tournament_selection
 
 
-def genetic_algorithm(generations:int, pop_size:int, mutation_prob:float=0.05, graph:str='genetic_graph.png', quickFinish=True):
+def genetic_algorithm(
+        generations:int,
+        pop_size:int,
+        mutation_prob:float=0.1,
+        eletism:float|int=0.04,
+        tornament_size:int=5,
+        graph:str=None,
+        quickFinish=True
+    ):
     '''
     to disable graphing set the graph parameter to None or ''
     quickFinish flag denotes whether this function should return the optimal answer once it is found or if it should go to n-generations even after the optimal solution is found
+    eletism is the amount of the best answers that keep going forward. if it is less than 1 if is treated as a percent and if its more it is treated as a whole number 
+    mutation_prob is the starting chance for mutation and mutation_prob_decay is the amount that mutation_prob will decrease each run
     '''
+    elete_count = int(eletism)
+    if elete_count < 1:
+        elete_count = int(pop_size * eletism)
+
     population = [Chromosome() for i in range(generations)]
     
     avg_costs = []
@@ -22,25 +36,28 @@ def genetic_algorithm(generations:int, pop_size:int, mutation_prob:float=0.05, g
         
         new_population = []
 
-        # ensure the best solution still goes on
-        best = min(population, key=lambda x: x.getCost())
+        # eletism
+        best = sorted(population, key=lambda x: x.getCost())[:elete_count]
 
-        if best.getCost() == 0 and quickFinish:
-            finish = True
 
-        
-        new_population += [best.clone()]
+        if elete_count != 0:
+            if best[0].getCost() == 0 and quickFinish:
+                finish = True
 
-        for _ in range(pop_size - 1):
-            p_a, p_b = tournament_selection(population)
+        new_population += [i.clone() for i in best]
+
+        for _ in range(pop_size - elete_count):
+
+            # tornament selection crossover child
+            p_a, p_b = tournament_selection(population, tornament_size)
             child = Chromosome.crossoverChild(p_a, p_b)
 
+            # mutation
             if random.random() <= mutation_prob:
                 child.mutate()
 
             new_population += [child]
 
-        
         population = new_population
         generation += 1
 
@@ -55,6 +72,7 @@ def genetic_algorithm(generations:int, pop_size:int, mutation_prob:float=0.05, g
         plt.legend()
         plt.figtext(0.01, 0.015, f"({pop_size=}, {generation=})", fontsize=8, fontstyle="italic", color="dimgrey")
         plt.savefig(graph)
+        plt.close()
 
     return min(population, key=lambda x: x.getCost())
 
@@ -67,7 +85,5 @@ if __name__ == '__main__':
     end = time.time()
 
     print(answer)
-    print(answer.getCost())
-
 
     print(end-start)

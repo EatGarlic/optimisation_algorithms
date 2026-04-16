@@ -4,10 +4,11 @@ from context import STAFF_DICT, PROJECTS_DICT
 
 OPTIMISATIONS = True
 
+# row flip can reach better average answers but is less predictable with time
 MUTATE_ROW_FLIP = False
 
 
-__cost_cache:dict = {}
+_cost_cache:dict = {}
 def vectorCost(vector: list[list[int]]) -> float:
     '''
     cache flag forces cost caching to either be off or on. otherwise it defaults to OPTIMISATION
@@ -16,8 +17,8 @@ def vectorCost(vector: list[list[int]]) -> float:
     # cache key is a tuple bc apparently they are faster than using strings (google said so it must be true)
     cache_key = tuple(tuple(a) for a in vector)
 
-    if OPTIMISATIONS and cache_key in __cost_cache:
-        return __cost_cache[cache_key]
+    if OPTIMISATIONS and cache_key in _cost_cache:
+        return _cost_cache[cache_key]
 
 
     _a = 0.20
@@ -68,7 +69,7 @@ def vectorCost(vector: list[list[int]]) -> float:
     out = _a * overwork_penalty + _b * skill_penalty + _d * difficulty_penalty + _t * deadline_penalty + _y * assignment_violation
 
     if OPTIMISATIONS:
-        __cost_cache[cache_key] = out
+        _cost_cache[cache_key] = out
 
     return out
 
@@ -148,9 +149,12 @@ class Chromosome:
             out += f'P{projectId + 1} -> ' + ', '.join([f'S{staffId}' for staffId in staffList]) + '\n'
 
         if cost:
-            out += f'  Cost: {self.getCost()}' + '\n'
+            out += f'  Cost: {round(self.getCost(), 3)}' + '\n'
 
         return out
+    
+    def __repr__(self) -> str:
+        return f"C({self.getCost()})"
 
 
 def tournament_selection(population:list[Chromosome], subsize:int=5) -> list[Chromosome]:
