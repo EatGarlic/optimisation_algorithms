@@ -1,6 +1,48 @@
-> [!IMPORTANT]
-> Make sure you have pulled before you make a pull request to try avoid merge conflicts
+## Installing and Execution
+1. Clone the repository
 
+```
+git clone https://github.com/stratisco/optimisation_algorithms.git
+```
+
+2. Run the main script
+
+```
+python main.py [args]
+```
+
+```
+Usage: "python main.py [args]"
+   -g   genetic algorithm
+   -g+  genetic algorithm with graph output (slower)
+   -p   particle swarm
+
+eg: "python main.py -g"
+```
+
+## Contribution
+Just submit a pull request. I'll add you as a collaborator once I know your account.
+
+> [!IMPORTANT]
+> Make sure all algorithms run correctly before pushing any changes
+
+
+## Repository contents
+* `main.py` - main script to run all programs
+* `context.py` - context for situation (staff/project info)
+
+*genetic algorithm*
+* `genetic.py` - main genetic algorithm script
+* `chromosome.py` - chromosome/vector script
+* `genetic_optimisations.py` - for optimising genetic algorithm parameters
+
+*particle swarm*
+* `particle.py` - 
+* `swarm.py` -
+* `particle_test` -
+
+
+<!--
 ## Vector representation *(for genetic algorithm)*:
 
 uses a 3d vector of bits such that `vector[projectId][staffId]` equals `1` if the staff member is assigned to the project and `0` if not
@@ -15,34 +57,4 @@ vector = [
     [0, 0, 0, 0, 0],   # Project 4 -> (under assigned)
 ]
 ```
-
-
-## Files
-
-*misc scripts*
-* `main.py` - main script to run all programs
-* `context.py` - context for situation (staff/project info)
-
-*genetic algorithm*
-* `genetic.py` - main genetic algorithm script
-* `chromosome.py` - chromosome/vector script
-
-*particle swarm*
-* `particle.py` - 
-* `swarm.py` - 
-
-
-<!-- *outputs*
-* `genetic_graph.png` - graphical output showing the cost over each generation
-* `cost_distribution.png` - small graph to show distribution of random assignment vectors -->
-
-*misc*
-* `README.md` - this file
-* `.gitignore` - git ignore file
-
-
-## Running this script
-1. Clone repo
-2. Navigate to base directory
-3. Run `python main.py`
-4. See output and note that now `genetic_graph.png` is now generated
+-->
